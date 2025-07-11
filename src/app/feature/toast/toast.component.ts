@@ -19,14 +19,13 @@ export class ToastComponent {
    * @returns The background and text color classes
    */
   getToastClass(type: Toast["type"]): string {
-    const base = 'text-white';
     const types: { [key: string]: string } = {
       success: 'bg-green-500',
       error: 'bg-red-500',
       info: 'bg-blue-500',
       warning: 'bg-yellow-500'
     };
-    return `${base} ${types[type]}`;
+    return `${types[type]}`;
   }
 
   /**

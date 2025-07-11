@@ -38,25 +38,21 @@ describe('ToastComponent', () => {
     it('should return correct classes for success type', () => {
       const result = component.getToastClass('success');
       expect(result).toContain('bg-green-500');
-      expect(result).toContain('text-white');
     });
 
     it('should return correct classes for error type', () => {
       const result = component.getToastClass('error');
       expect(result).toContain('bg-red-500');
-      expect(result).toContain('text-white');
     });
 
     it('should return correct classes for info type', () => {
       const result = component.getToastClass('info');
       expect(result).toContain('bg-blue-500');
-      expect(result).toContain('text-white');
     });
 
     it('should return correct classes for warning type', () => {
       const result = component.getToastClass('warning');
       expect(result).toContain('bg-yellow-500');
-      expect(result).toContain('text-white');
     });
   });
 
