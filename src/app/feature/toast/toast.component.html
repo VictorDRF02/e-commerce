@@ -1,0 +1,11 @@
+<div class="fixed bottom-4 right-4 z-50 space-y-2">
+  @for (toast of toasts$ | async; track $index) {
+  <div
+    class="px-4 py-2 rounded shadow-lg flex items-center"
+    [class]="getToastClass(toast.type)"
+  >
+    <span class="font-medium">{{ toast.message }}</span>
+    <button class="ml-4 text-lg" (click)="remove(toast.id)">&times;</button>
+  </div>
+  }
+</div>
