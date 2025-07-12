@@ -2,11 +2,12 @@ import { Component, Input } from '@angular/core';
 import { Product, Rating } from '../../../core/interfaces/product';
 import { CurrencyPipe } from '@angular/common';
 import { ShortDescriptionPipe } from '../../../shared/pipes/short-description.pipe';
+import { CartActionDirective } from '../../../shared/directives/cart-action.directive';
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [CurrencyPipe, ShortDescriptionPipe],
+  imports: [CurrencyPipe, ShortDescriptionPipe, CartActionDirective],
   templateUrl: './product-card.component.html',
 })
 export class ProductCardComponent {
