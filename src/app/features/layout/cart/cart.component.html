@@ -88,10 +88,10 @@
     </div>
     <button 
       class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded transition-colors"
-      [routerLink]="['/checkout']"
+      [routerLink]="[isLoggedIn() ? '/checkout' : '/login']"
       (click)="closeCart()"
     >
-      Proceed to payment
+      {{ isLoggedIn() ? 'Proceed to payment' : 'Login to proceed' }}
     </button>
   </div>
 </div>

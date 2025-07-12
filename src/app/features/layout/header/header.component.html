@@ -1,29 +1,33 @@
-<div class="flex justify-between items-center p-4 shadow-md bg-white/90 backdrop-blur-sm sticky top-0 z-30 w-full border-b border-gray-100">
+<div
+  class="flex justify-between items-center p-4 shadow-md bg-white/90 backdrop-blur-sm sticky top-0 z-30 w-full border-b border-gray-100"
+>
   <a routerLink="/" class="flex items-center gap-1">
     <h1 class="text-2xl font-bold text-gray-800">Store</h1>
   </a>
 
   <!-- Search, Account -->
   <div class="flex items-center gap-4">
-    <a 
+    <a
       class="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
       [routerLink]="['/search']"
       aria-label="Search"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-      </svg>
+      <div class="h-5 w-5">
+        <img src="search.svg" alt="Search" />
+      </div>
     </a>
-
-    <a 
+    <a
       class="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
-      [routerLink]="['/login']"
+      [routerLink]="[isLoggedIn() ? '/account' : '/login']"
       aria-label="Account"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-      </svg>
+      <div>
+        @if (isLoggedIn()) {
+        <img class="h-5 w-5" src="account.svg" alt="Account" />
+        } @else {
+        <img class="h-5 w-5" src="login.svg" alt="Login" />
+        }
+      </div>
     </a>
-
   </div>
 </div>

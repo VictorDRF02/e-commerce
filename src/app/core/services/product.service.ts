@@ -4,13 +4,13 @@ import { environment } from '../../../environments/environment';
 import { Product } from '../interfaces/product';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
-  protected http = inject(HttpClient)
+  protected http = inject(HttpClient);
 
   get url() {
-    return `${environment.apiUrl}/products`
+    return `${environment.apiUrl}/products`;
   }
 
   /**
@@ -18,7 +18,7 @@ export class ProductService {
    * @returns {Observable<Product[]>} An observable of the products
    */
   all() {
-    return this.http.get<Product[]>(this.url)
+    return this.http.get<Product[]>(this.url);
   }
 
   /**
@@ -27,6 +27,6 @@ export class ProductService {
    * @returns {Observable<Product>}
    */
   get(id: number) {
-    return this.http.get<Product>(`${this.url}/${id}`)
+    return this.http.get<Product>(`${this.url}/${id}`);
   }
 }

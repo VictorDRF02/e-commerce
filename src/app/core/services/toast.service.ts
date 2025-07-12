@@ -3,10 +3,9 @@ import { BehaviorSubject, delay, of } from 'rxjs';
 import { Toast } from '../interfaces/toast';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ToastService {
-
   private toasts = new BehaviorSubject<Toast[]>([]);
   toasts$ = this.toasts.asObservable();
 
@@ -15,13 +14,15 @@ export class ToastService {
    * @param message - Message to show
    * @param type - Type of the toast (default: info)
    */
-  show(message: string, type: Toast["type"] = 'info'): void {
+  show(message: string, type: Toast['type'] = 'info'): void {
     const id = Math.random().toString(36).substring(2);
     const newToast = { id, message, type };
-    
+
     this.toasts.next([...this.toasts.value, newToast]);
-    
-    of(null).pipe(delay(5000)).subscribe(() => this.remove(id))
+
+    of(null)
+      .pipe(delay(5000))
+      .subscribe(() => this.remove(id));
   }
 
   /**
@@ -29,11 +30,11 @@ export class ToastService {
    * @param id - Id of the toast to remove
    */
   remove(id: string): void {
-    this.toasts.next(this.toasts.value.filter(toast => toast.id !== id));
+    this.toasts.next(this.toasts.value.filter((toast) => toast.id !== id));
   }
 
   /**
-   * Show a toast of the type success with the given message 
+   * Show a toast of the type success with the given message
    * @param message - Message to show
    */
   success(message: string): void {
@@ -41,7 +42,7 @@ export class ToastService {
   }
 
   /**
-   * Show a toast of the type error with the given message 
+   * Show a toast of the type error with the given message
    * @param message - Message to show
    */
   error(message: string): void {
@@ -49,7 +50,7 @@ export class ToastService {
   }
 
   /**
-   * Show a toast of the type info with the given message 
+   * Show a toast of the type info with the given message
    * @param message - Message to show
    */
   info(message: string): void {
@@ -57,7 +58,7 @@ export class ToastService {
   }
 
   /**
-   * Show a toast of the type warning with the given message 
+   * Show a toast of the type warning with the given message
    * @param message - Message to show
    */
   warning(message: string): void {

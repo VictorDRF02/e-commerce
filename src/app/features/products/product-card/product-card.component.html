@@ -1,0 +1,64 @@
+<div
+  class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+>
+  <!-- Product image -->
+  <div class="h-96 overflow-hidden">
+    <img
+      [src]="product.image"
+      [alt]="product.title"
+      class="w-full h-full object-contain p-4"
+      loading="lazy"
+    />
+  </div>
+
+  <!-- Title and price -->
+  <div class="p-4">
+    <div class="flex justify-between items-start">
+      <h3 class="font-semibold text-lg mb-2 line-clamp-2">
+        {{ product.title }}
+      </h3>
+      <span class="font-bold text-blue-600">{{
+        product.price | currency
+      }}</span>
+    </div>
+
+    <!-- Rating -->
+    @if (product.rating) {
+    <div class="flex items-center mb-2">
+      <div class="flex mr-2">
+        @for (item of getStarRating(product.rating); track $index) { @switch
+        (item) { @case ('full') {
+        <img src="star-full.svg" alt="Star full" />
+        } @case ('half') {
+        <img src="star-half.svg" alt="Star half" />
+        } @default {
+        <img src="star-empty.svg" alt="Star empty" />
+        } } }
+      </div>
+      <span class="text-sm text-gray-500">({{ product.rating.count }})</span>
+    </div>
+
+    }
+    <!-- Description -->
+    <p class="text-gray-600 text-sm mb-4">
+      {{ product.description | shortDescription : 150 : false }}
+    </p>
+    <div class="flex justify-between items-center">
+      <!-- Categories -->
+      <span class="text-xs px-2 py-1 bg-gray-100 rounded-full text-gray-600">
+        {{ product.category }}
+      </span>
+      <!-- Buttons -->
+      <div class="flex gap-2">
+        <button class="px-3 py-2 bg-gray-500 text-white rounded-lg">
+          Ver detalles
+        </button>
+        <button
+          class="px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+        >
+          Añadir al carrito
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CartComponent } from "../cart/cart.component";
+import { AuthService } from '../../../core/services/auth.service';
+import { BaseComponent } from '../../../shared/components/base/base.component';
 
 @Component({
   selector: 'app-header',
@@ -8,6 +9,4 @@ import { CartComponent } from "../cart/cart.component";
   imports: [RouterLink],
   templateUrl: './header.component.html',
 })
-export class HeaderComponent {
-
-}
+export class HeaderComponent extends BaseComponent {}

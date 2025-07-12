@@ -37,7 +37,6 @@ describe('AuthService', () => {
 
   describe('Initialization', () => {
     it('should initialize with null token if no token in localStorage', () => {
-      
       expect(service.token).toBeNull();
       service.token$.subscribe((token) => {
         expect(token).toBeNull();
@@ -47,8 +46,8 @@ describe('AuthService', () => {
 
   describe('login()', () => {
     it('should make POST request to login endpoint', () => {
-      const username = 'testuser';
-      const password = 'testpass';
+      const username = 'test_user';
+      const password = 'test_pass';
 
       service.login(username, password).subscribe((response) => {
         expect(response).toEqual(mockLoginResponse);
@@ -62,7 +61,7 @@ describe('AuthService', () => {
     });
 
     it('should store token in localStorage and update token$ on successful login', () => {
-      service.login('testuser', 'testpass').subscribe(() => {
+      service.login('test_user', 'test_pass').subscribe(() => {
         expect(localStorage.getItem('token')).toBe(mockLoginResponse.token);
         expect(service.token).toBe(mockLoginResponse.token);
 

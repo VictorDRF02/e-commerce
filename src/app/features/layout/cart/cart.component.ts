@@ -4,6 +4,7 @@ import { selectProducts, selectTotalItems, selectTotalPrice } from '../../../cor
 import { changeProductQuantity, removeProduct } from '../../../core/stores/cart/cart.actions';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { BaseComponent } from '../../../shared/components/base/base.component';
 
 @Component({
   selector: 'app-cart',
@@ -11,7 +12,7 @@ import { RouterLink } from '@angular/router';
   imports: [AsyncPipe, CommonModule, RouterLink],
   templateUrl: './cart.component.html',
 })
-export class CartComponent {
+export class CartComponent extends BaseComponent {
   private store = inject(Store);
 
   products$ = this.store.select(selectProducts);

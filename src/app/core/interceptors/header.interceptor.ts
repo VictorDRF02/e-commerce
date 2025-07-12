@@ -5,9 +5,9 @@ import { HttpInterceptorFn } from '@angular/common/http';
  */
 export const headerInterceptor: HttpInterceptorFn = (req, next) => {
   req = req.clone({
-      setHeaders: {
-        Accept: 'application/json',
-      },
-    });
+    setHeaders: {
+      Accept: 'application/json',
+    },
+  });
   return next(req);
 };

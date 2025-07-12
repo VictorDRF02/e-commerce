@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from "./header/header.component";
-import { CartComponent } from "./cart/cart.component";
+import { HeaderComponent } from './header/header.component';
+import { CartComponent } from './cart/cart.component';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -9,6 +9,4 @@ import { RouterOutlet } from '@angular/router';
   imports: [HeaderComponent, CartComponent, RouterOutlet],
   templateUrl: './layout.component.html',
 })
-export class LayoutComponent {
-
-}
+export class LayoutComponent {}
