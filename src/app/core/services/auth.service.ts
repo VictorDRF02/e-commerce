@@ -3,18 +3,26 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { BehaviorSubject, of, switchMap } from 'rxjs';
 import { LoginResponse } from '../interfaces/login-response';
+import { UserService } from './user.service';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   protected http = inject(HttpClient);
+  protected userService = inject(UserService);
   token$ = new BehaviorSubject<string | null>(null);
+  user$ = new BehaviorSubject<User | null>(null);
 
   constructor() {
     const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
     if (token) {
       this.token$.next(token);
+    }
+    if (user) {
+      this.user$.next(JSON.parse(user))
     }
   }
 
@@ -26,9 +34,13 @@ export class AuthService {
     return this.token$.value;
   }
 
+  get user() {
+    return this.user$.value
+  }
+
   /**
    * Login the user by sending the username and password
-   * @returns {Observable<LoginResponse>} An observable of the login response
+   * @returns {Observable<User>} An observable of the login response
    */
   login(username: string, password: string) {
     return this.http
@@ -37,7 +49,15 @@ export class AuthService {
         switchMap((response) => {
           localStorage.setItem('token', response.token);
           this.token$.next(response.token);
-          return of(response);
+          return this.userService.all();
+        }),
+        switchMap((users) => {
+          const user =
+            users.find(
+              (u) => u.username == username && u.password == password
+            ) || {};
+          localStorage.setItem('user', JSON.stringify(user));
+          return of(user);
         })
       );
   }
@@ -47,6 +67,8 @@ export class AuthService {
    */
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('user')
     this.token$.next(null);
+    this.user$.next(null);
   }
 }

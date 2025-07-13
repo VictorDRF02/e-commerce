@@ -26,7 +26,6 @@ export class ProductsComponent extends BaseComponent implements OnInit {
       finalize(() => this.isLoading.set(false))
     ).subscribe((products) => {
       this.products = products;
-      this.products = []
     });
   }
 }
