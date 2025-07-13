@@ -5,11 +5,12 @@ import { finalize, takeUntil } from 'rxjs';
 import { BaseComponent } from '../../shared/components/base/base.component';
 import { ProductPlaceholderComponent } from "./product-placeholder/product-placeholder.component";
 import { ProductCardComponent } from "./product-card/product-card.component";
+import { NoProductsFoundComponent } from "../../shared/components/no-products-found/no-products-found.component";
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [ProductPlaceholderComponent, ProductCardComponent],
+  imports: [ProductPlaceholderComponent, ProductCardComponent, NoProductsFoundComponent],
   templateUrl: './products.component.html',
 })
 export class ProductsComponent extends BaseComponent implements OnInit {
@@ -25,6 +26,7 @@ export class ProductsComponent extends BaseComponent implements OnInit {
       finalize(() => this.isLoading.set(false))
     ).subscribe((products) => {
       this.products = products;
+      this.products = []
     });
   }
 }

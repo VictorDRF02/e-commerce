@@ -50,15 +50,19 @@
       </span>
       <!-- Buttons -->
       <div class="flex gap-2">
-        <button class="px-3 py-2 bg-gray-500 text-white rounded-lg">
-          Ver detalles
-        </button>
+        <a
+          class="px-3 py-2 bg-gray-500 text-white rounded-lg"
+          [routerLink]="['/product/' + product.id]"
+          routerLinkActive="router-link-active"
+        >
+          Details
+        </a>
         <button
           class="px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
           cartAction="add"
           [product]="product"
         >
-          Añadir al carrito
+          Add to cart
         </button>
       </div>
     </div>

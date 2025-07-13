@@ -1,0 +1,73 @@
+<div class="bg-white rounded-xl shadow-lg overflow-hidden">
+  <div class="md:flex">
+    <!-- Empty Image Section -->
+    <div
+      class="md:w-1/2 p-8 flex flex-col items-center justify-center bg-gray-50 min-h-96"
+    >
+      <div class="h-24 w-24 text-gray-300">
+        <img src="image-placeholder.svg" alt="Product Image" />
+      </div>
+
+      <p class="mt-4 text-gray-400 font-medium">Product image not available</p>
+    </div>
+
+    <!-- Empty Details Section -->
+    <div class="md:w-1/2 p-8">
+      <!-- Empty Category -->
+      <span class="text-sm text-blue-600 font-semibold">
+        PRODUCT UNAVAILABLE
+      </span>
+
+      <!-- Empty Title -->
+      <h1 class="text-3xl font-bold text-gray-800 mt-2 mb-4">
+        This product is no longer available
+      </h1>
+
+      <!-- Empty Price -->
+      <div class="flex items-center mb-6">
+        <span class="text-2xl font-bold text-gray-400 line-through">
+          $--.--
+        </span>
+        <span
+          class="ml-2 text-sm text-red-600 bg-red-100 px-2 py-1 rounded-full"
+        >
+          Unavailable
+        </span>
+      </div>
+
+      <!-- Empty Rating -->
+      <div class="flex items-center mb-6">
+        <div class="flex mr-2">
+          <svg
+            class="w-5 h-5 text-gray-300"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            ></path>
+          </svg>
+          <span class="text-sm text-gray-400 ml-1">No reviews</span>
+        </div>
+      </div>
+
+      <!-- Empty Description -->
+      <div class="mb-8">
+        <h2 class="text-lg font-semibold text-gray-800 mb-2">Description</h2>
+        <p class="text-gray-500 italic">
+          This item has been discontinued or is temporarily out of stock.
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4">
+        <button
+          class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors"
+          (click)="location.back()"
+        >
+          Go Back
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
