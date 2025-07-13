@@ -1,0 +1,86 @@
+<div class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+  <!-- Header -->
+  <!-- Account Header Section -->
+  <div class="bg-white border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div
+        class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+      >
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">My Account</h1>
+          <p class="mt-1 text-sm text-gray-500">
+            Manage your personal information
+          </p>
+        </div>
+        <div class="flex gap-3">
+          <button
+            (click)="location.back()"
+            class="px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+          >
+            Go Back
+          </button>
+          <button
+            (click)="authService.logout()"
+            class="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
+          >
+            Sign Out
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  @if (user) {
+  <!-- User Info -->
+  <div class="px-6 py-8 space-y-6 max-w-7xl mx-auto">
+    <!-- Personal Information Section -->
+    <div class="border-b border-gray-200 pb-6">
+      <h3 class="text-lg font-medium text-gray-900 mb-4">
+        Personal Information
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <p class="text-sm font-medium text-gray-500">First Name</p>
+          <p class="mt-1 text-sm text-gray-900">{{ user.name.firstname }}</p>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-gray-500">Last Name</p>
+          <p class="mt-1 text-sm text-gray-900">{{ user.name.lastname }}</p>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-gray-500">Username</p>
+          <p class="mt-1 text-sm text-gray-900">{{ user.username }}</p>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-gray-500">Email</p>
+          <p class="mt-1 text-sm text-gray-900">{{ user.email }}</p>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-gray-500">Phone</p>
+          <p class="mt-1 text-sm text-gray-900">{{ user.phone }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Address Section -->
+    <div class="border-b border-gray-200 pb-6">
+      <h3 class="text-lg font-medium text-gray-900 mb-4">Address</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <p class="text-sm font-medium text-gray-500">Street</p>
+          <p class="mt-1 text-sm text-gray-900">
+            {{ user.address.street }} {{ user.address.number }}
+          </p>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-gray-500">City</p>
+          <p class="mt-1 text-sm text-gray-900">{{ user.address.city }}</p>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-gray-500">Zip Code</p>
+          <p class="mt-1 text-sm text-gray-900">{{ user.address.zipcode }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>

@@ -5,6 +5,7 @@ import { BehaviorSubject, of, switchMap } from 'rxjs';
 import { LoginResponse } from '../interfaces/login-response';
 import { UserService } from './user.service';
 import { User } from '../interfaces/user';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ import { User } from '../interfaces/user';
 export class AuthService {
   protected http = inject(HttpClient);
   protected userService = inject(UserService);
+  protected router = inject(Router)
   token$ = new BehaviorSubject<string | null>(null);
   user$ = new BehaviorSubject<User | null>(null);
 
@@ -55,8 +57,9 @@ export class AuthService {
           const user =
             users.find(
               (u) => u.username == username && u.password == password
-            ) || {};
+            ) || null;
           localStorage.setItem('user', JSON.stringify(user));
+          this.user$.next(user)
           return of(user);
         })
       );
@@ -70,5 +73,6 @@ export class AuthService {
     localStorage.removeItem('user')
     this.token$.next(null);
     this.user$.next(null);
+    this.router.navigate(['/'])
   }
 }
