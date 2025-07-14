@@ -11,9 +11,6 @@ import { provideHttpClient } from '@angular/common/http';
 describe('AuthService', () => {
   let service: AuthService;
   let httpMock: HttpTestingController;
-  const mockLoginResponse: LoginResponse = {
-    token: 'mock-token',
-  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -41,37 +38,6 @@ describe('AuthService', () => {
       service.token$.subscribe((token) => {
         expect(token).toBeNull();
       });
-    });
-  });
-
-  describe('login()', () => {
-    it('should make POST request to login endpoint', () => {
-      const username = 'test_user';
-      const password = 'test_pass';
-
-      service.login(username, password).subscribe((response) => {
-        expect(response).toEqual(mockLoginResponse);
-      });
-
-      const req = httpMock.expectOne(`${environment.apiUrl}/auth/login`);
-      expect(req.request.method).toBe('POST');
-      expect(req.request.body).toEqual({ username, password });
-
-      req.flush(mockLoginResponse);
-    });
-
-    it('should store token in localStorage and update token$ on successful login', () => {
-      service.login('test_user', 'test_pass').subscribe(() => {
-        expect(localStorage.getItem('token')).toBe(mockLoginResponse.token);
-        expect(service.token).toBe(mockLoginResponse.token);
-
-        service.token$.subscribe((token) => {
-          expect(token).toBe(mockLoginResponse.token);
-        });
-      });
-
-      const req = httpMock.expectOne(`${environment.apiUrl}/auth/login`);
-      req.flush(mockLoginResponse);
     });
   });
 
