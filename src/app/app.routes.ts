@@ -6,6 +6,7 @@ import { LoginComponent } from './features/login/login.component';
 import { AccountComponent } from './features/account/account.component';
 import { authGuard } from './core/guards/auth.guard';
 import { PaymentComponent } from './features/payment/payment.component';
+import { SearchComponent } from './features/search/search.component';
 
 export const routes: Routes = [
   {
@@ -17,19 +18,23 @@ export const routes: Routes = [
         component: ProductsComponent,
       },
       {
+        path: 'search',
+        component: SearchComponent,
+      },
+      {
         path: 'product/:id',
         component: ProductDetailsComponent,
       },
       {
         path: 'account',
         canActivate: [authGuard],
-        component: AccountComponent
+        component: AccountComponent,
       },
       {
         path: 'payment',
         canActivate: [authGuard],
-        component: PaymentComponent
-      }
+        component: PaymentComponent,
+      },
     ],
   },
   {
