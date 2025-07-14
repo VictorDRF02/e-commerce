@@ -1,0 +1,92 @@
+<div class="container mx-auto px-4 py-8 max-w-6xl">
+  <div class="bg-white rounded-xl shadow-lg overflow-hidden p-8">
+    <!-- Title -->
+    <h1 class="text-3xl font-bold text-gray-800 mb-8">Checkout</h1>
+
+    <!-- Order Summary -->
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Order Summary</h2>
+
+      <!-- Items Count -->
+      <div class="flex justify-between py-3 border-b border-gray-200">
+        <span class="text-gray-600">Items ({{ totalItems$ | async }})</span>
+        <span class="font-medium">{{ totalPrice$ | async | currency }}</span>
+      </div>
+
+      <!-- Shipping -->
+      <div class="flex justify-between py-3 border-b border-gray-200">
+        <span class="text-gray-600">Shipping</span>
+        <span class="font-medium">{{ shippingCost | currency }}</span>
+      </div>
+
+      <!-- Total -->
+      <div class="flex justify-between py-4">
+        <span class="text-lg font-semibold">Total</span>
+        <span class="text-xl font-bold text-blue-600">
+          {{ ((totalPrice$ | async) ?? 0) + shippingCost | currency }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Payment Form (simplified for demo) -->
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">
+        Payment Information
+      </h2>
+      <div class="bg-gray-50 p-6 rounded-lg">
+        <p class="text-gray-600 italic mb-4">
+          This is a demo store. No real payment information is collected.
+        </p>
+
+        <!-- Demo Payment Fields -->
+        <div class="space-y-4">
+          <div>
+            <label class="block text-gray-700 mb-1">Card Number</label>
+            <input
+              type="text"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+              placeholder="4242 4242 4242 4242"
+              readonly
+            />
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-gray-700 mb-1">Expiration</label>
+              <input
+                type="text"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                placeholder="12/24"
+                readonly
+              />
+            </div>
+            <div>
+              <label class="block text-gray-700 mb-1">CVC</label>
+              <input
+                type="text"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                placeholder="123"
+                readonly
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-end">
+      <button
+        (click)="completeOrder()"
+        class="px-6 py-3 sm:w-full lg:w-1/4 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+      >
+        Complete order
+      </button>
+      <button
+        class="px-6 py-3 sm:w-full lg:w-1/4 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors"
+        (click)="location.back()"
+      >
+        Go back
+      </button>
+    </div>
+  </div>
+</div>

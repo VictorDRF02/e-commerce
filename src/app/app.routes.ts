@@ -5,6 +5,7 @@ import { ProductDetailsComponent } from './features/product-details/product-deta
 import { LoginComponent } from './features/login/login.component';
 import { AccountComponent } from './features/account/account.component';
 import { authGuard } from './core/guards/auth.guard';
+import { PaymentComponent } from './features/payment/payment.component';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,11 @@ export const routes: Routes = [
         path: 'account',
         canActivate: [authGuard],
         component: AccountComponent
+      },
+      {
+        path: 'payment',
+        canActivate: [authGuard],
+        component: PaymentComponent
       }
     ],
   },
