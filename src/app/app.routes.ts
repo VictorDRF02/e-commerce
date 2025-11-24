@@ -7,6 +7,7 @@ import { AccountComponent } from './features/account/account.component';
 import { authGuard } from './core/guards/auth.guard';
 import { PaymentComponent } from './features/payment/payment.component';
 import { SearchComponent } from './features/search/search.component';
+import { SettingsComponent } from './features/settings/settings.component';
 
 export const routes: Routes = [
   {
@@ -35,6 +36,10 @@ export const routes: Routes = [
         canActivate: [authGuard],
         component: PaymentComponent,
       },
+      {
+        path: 'settings',
+        component: SettingsComponent,
+      }
     ],
   },
   {

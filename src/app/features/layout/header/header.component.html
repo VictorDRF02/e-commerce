@@ -5,7 +5,7 @@
     <h1 class="text-2xl font-bold text-gray-800">Store</h1>
   </a>
 
-  <!-- Search, Account -->
+  <!-- Search, Settings -->
   <div class="flex items-center gap-4">
     <a
       class="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
@@ -18,12 +18,12 @@
     </a>
     <a
       class="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
-      [routerLink]="[isLoggedIn() ? '/account' : '/login']"
+      [routerLink]="[isLoggedIn() ? '/settings' : '/login']"
       aria-label="Account"
     >
       <div>
         @if (isLoggedIn()) {
-        <img class="h-5 w-5" src="account.svg" alt="Account" />
+        <img class="h-5 w-5" src="settings.svg" alt="Account" />
         } @else {
         <img class="h-5 w-5" src="login_1.svg" alt="Login" />
         }

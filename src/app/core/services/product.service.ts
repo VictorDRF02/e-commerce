@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Product } from '../interfaces/product';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ export class ProductService {
   protected http = inject(HttpClient);
 
   get url() {
-    return `${environment.apiUrl}/products`;
+    return `${environment.apiUrl}/products.php`;
   }
 
   /**
@@ -18,7 +19,12 @@ export class ProductService {
    * @returns {Observable<Product[]>} An observable of the products
    */
   all() {
-    return this.http.get<Product[]>(this.url);
+    return this.http.get<Product[]>(this.url).pipe(
+      map((products) => {
+        products.forEach(this.parseProductImage);
+        return products;
+      })
+    );
   }
 
   /**
@@ -27,6 +33,21 @@ export class ProductService {
    * @returns {Observable<Product>}
    */
   get(id: number) {
-    return this.http.get<Product>(`${this.url}/${id}`);
+    return this.http.get<Product>(`${this.url}`, { params: { id } }).pipe(
+      map((product) => {
+        this.parseProductImage(product);
+        return product;
+      })
+    );
+  }
+
+  /**
+   * Set the product image url
+   * @param product - The product to set the image
+   */
+  parseProductImage(product: Product) {
+    if (product.image) {
+      product.image = environment.apiUrl + '/uploads/' + product.image;
+    }
   }
 }

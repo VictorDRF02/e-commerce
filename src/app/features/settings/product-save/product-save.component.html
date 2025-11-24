@@ -1,0 +1,45 @@
+<div class="container mx-auto px-4 py-8 max-w-6xl">
+  <!-- Product -->
+  <div class="bg-white rounded-xl shadow-lg overflow-hidden" [formGroup]="form">
+    <div class="md:flex">
+      <!-- Product image -->
+      <div class="md:w-1/2 p-8 flex items-center justify-center bg-gray-50">
+        <img
+          [src]="product?.image"
+          [alt]="product?.title"
+          class="max-h-96 object-contain"
+          loading="lazy"
+        />
+        <input type="file" formControlName="image">
+        <button></button>
+      </div>
+
+      <!-- Details -->
+      <div class="md:w-1/2 p-8">
+        <!-- Category -->
+        <input type="text" formControlName="category" />
+        <!-- Title -->
+        <input type="text" formControlName="title" />
+        <!-- Price -->
+        <input type="number" formControlName="price" />
+        <!-- Description -->
+        <textarea name="description" formControlName="description"></textarea>
+
+        <!-- Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4">
+          <button
+            class="flex-1 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Save
+          </button>
+          <button
+            class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors"
+            (click)="close.emit()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
