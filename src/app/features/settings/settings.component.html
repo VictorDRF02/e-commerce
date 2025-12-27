@@ -1,24 +1,53 @@
 <div class="container mx-auto px-4 py-8" [class.hidden]="showSave()">
+  
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-2xl font-bold text-gray-800">Mis Productos</h1>
+    <button 
+      (click)="add()" 
+      class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+      </svg>
+      Agregar Producto
+    </button>
+  </div>
+
   <div class="grid sm:grid-cols-1 lg:grid-cols-3 gap-6">
-    @if (isLoading()) { @for (item of [1, 2, 3]; track $index) {
-    <app-product-placeholder></app-product-placeholder>
-    } } @else { @for (product of products; track $index) {
-    <app-product-item-list
-      [product]="product"
-      (edit)="edit(product)"
-    ></app-product-item-list>
-    } }
+    @if (isLoading()) { 
+      @for (item of [1, 2, 3]; track $index) {
+        <app-product-placeholder></app-product-placeholder>
+      } 
+    } @else { 
+      @for (product of products; track $index) {
+        <app-product-item-list
+          [product]="product"
+          (edit)="edit(product)"
+          (remove)="remove(product)"
+        ></app-product-item-list>
+      } 
+    }
   </div>
 
   @if (!isLoading() && products.length == 0) {
-  <app-no-products-found></app-no-products-found>
+    <app-no-products-found></app-no-products-found>
+    <div class="flex justify-center mt-4">
+        <button (click)="add()" class="text-indigo-600 font-medium hover:underline">
+            Crea tu primer producto aquí
+        </button>
+    </div>
   }
 </div>
 
-<!-- Modals -->
 @if (showSave()) {
 <app-product-save
   [product]="selectedProduct"
-  (close)="toggleSave()"
+  (close)="toggleSave($event)"
 ></app-product-save>
+}
+
+@if (showConfirm()) {
+<app-confirm
+  [product]="selectedProduct"
+  (close)="toggleConfirm($event)"
+></app-confirm>
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Product } from '../interfaces/product';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +39,28 @@ export class ProductService {
         return product;
       })
     );
+  }
+
+  /**
+   * Save a product to the api
+   * @param product - Product to save
+   * @returns {Observable<Product>} An observable of the saved product
+   */
+  save(product: Product): Observable<Product> {
+    if (product.id) {
+      return this.http.put<Product>(this.url, product, { params: { id: product.id } });
+    } else {
+      return this.http.post<Product>(this.url, product);
+    }
+  }
+
+  /**
+   * Delete a product
+   * @param id - Product id
+   * @returns {Observable<Product>} An observable of the deleted product
+   */
+  delete(id: any) {
+    return this.http.delete<Product>(`${this.url}`, { params: { id } });
   }
 
   /**
