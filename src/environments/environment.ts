@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: 'https://fakestoreapi.com',
+  apiUrl: 'https://e-commerce-api-eight-umber.vercel.app/api',
 };
