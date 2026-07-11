@@ -5,7 +5,7 @@
       <div class="md:w-5/12 p-8 bg-gray-50 flex flex-col items-center justify-center border-r border-gray-100">
         <div class="relative group w-full flex flex-col items-center">
           <img
-            [src]="'placeholder.png'"
+            [src]="imagePreview"
             [alt]="product?.title"
             class="max-h-80 object-contain drop-shadow-md group-hover:opacity-75 transition-opacity"
             loading="lazy"
@@ -16,10 +16,20 @@
               <div class="flex flex-col items-center justify-center pt-5 pb-6">
                 <svg class="w-8 h-8 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
                 <p class="mb-2 text-sm text-gray-500 font-semibold">Haz clic para subir imagen</p>
-                <p class="text-xs text-gray-400">PNG, JPG (MAX. 800x400px)</p>
+                <p class="text-xs text-gray-400">PNG, JPG, WEBP, SVG</p>
+                @if (selectedImageName) {
+                <p class="mt-1 text-xs text-blue-600">{{ selectedImageName }}</p>
+                }
+                @if (isUploadingImage) {
+                <p class="mt-1 text-xs text-gray-500">Subiendo imagen...</p>
+                }
               </div>
-              <!-- TODO: Add logic -->
-              <input type="file" class="hidden" />
+              <input
+                type="file"
+                class="hidden"
+                accept="image/png,image/jpeg,image/webp,image/svg+xml,image/gif"
+                (change)="onImageSelected($event)"
+              />
             </label>
           </div>
         </div>
@@ -73,7 +83,7 @@
           <div class="flex flex-col sm:flex-row gap-4 pt-4">
             <button
               class="flex-1 px-8 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-700 hover:shadow-blue-200 transition-all active:scale-95"
-              [disabled]="form.invalid"
+              [disabled]="form.invalid || isUploadingImage"
               (click)="save()"
             >
               Guardar Cambios

@@ -90,6 +90,14 @@
         "rate": 4.5,
         "count": 47
       }
+    },
+    {
+      "id": 0,
+      "title": "Tal",
+      "price": 5,
+      "description": "dwadwadwa",
+      "category": "Aaaaa",
+      "image": "placeholder.png"
     }
   ]
 }

@@ -1,10 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-import jwt from 'jsonwebtoken';
-import { readFile, writeFile } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { mkdirSync } from 'node:fs';
+import multer from 'multer';
+import { DbService } from './services/db.service.js';
+import { UserService } from './services/user.service.js';
+import { AuthService } from './services/auth.service.js';
+import { ProductService } from './services/product.service.js';
+import { createAuthMiddleware } from './middlewares/auth.middleware.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -16,12 +20,40 @@ const apiPrefix = '/api';
 const jwtSecret = process.env.JWT_SECRET ?? 'e-commerce-secret';
 
 const app = express();
+const dbService = new DbService(dataFile);
+await dbService.init();
+const userService = new UserService(dbService);
+const authService = new AuthService(userService, jwtSecret);
+const productService = new ProductService(dbService);
+const authMiddleware = createAuthMiddleware(authService);
+
+mkdirSync(uploadsDir, { recursive: true });
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: (_req, _file, cb) => cb(null, uploadsDir),
+    filename: (_req, file, cb) => {
+      const extension = file.originalname.includes('.')
+        ? file.originalname.slice(file.originalname.lastIndexOf('.')).toLowerCase()
+        : '';
+      cb(null, `${Date.now()}-${Math.round(Math.random() * 1e9)}${extension}`);
+    },
+  }),
+  fileFilter: (_req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+      return;
+    }
+
+    cb(new Error('Only image files are allowed'));
+  },
+  limits: {
+    fileSize: 5 * 1024 * 1024,
+  },
+});
 
 app.use(cors());
 app.use(express.json());
 app.use(`${apiPrefix}/uploads`, express.static(uploadsDir));
-
-let db = await loadDb();
 
 app.get(`${apiPrefix}/health`, (_req, res) => {
   res.json({ ok: true });
@@ -29,31 +61,22 @@ app.get(`${apiPrefix}/health`, (_req, res) => {
 
 app.post(`${apiPrefix}/auth/login`, (req, res) => {
   const { username, password } = req.body ?? {};
-  const user = db.users.find((item) => item.username === username && item.password === password);
+  const loginResponse = authService.login(username, password);
 
-  if (!user) {
+  if (!loginResponse) {
     return res.status(401).json({ message: 'Invalid credentials' });
   }
 
-  const token = jwt.sign(
-    {
-      sub: String(user.id),
-      username: user.username,
-    },
-    jwtSecret,
-    { expiresIn: '1d' }
-  );
-
-  return res.json({ token });
+  return res.json(loginResponse);
 });
 
 app.get(`${apiPrefix}/users`, (_req, res) => {
-  res.json(db.users);
+  res.json(userService.all());
 });
 
 app.get(`${apiPrefix}/users/:id`, (req, res) => {
   const id = Number(req.params.id);
-  const user = db.users.find((item) => item.id === id);
+  const user = userService.getById(id);
 
   if (!user) {
     return res.status(404).json({ message: 'User not found' });
@@ -66,7 +89,7 @@ app.get(`${apiPrefix}/products`, (req, res) => {
   const id = req.query.id ? Number(req.query.id) : null;
 
   if (id) {
-    const product = db.products.find((item) => item.id === id);
+    const product = productService.getById(id);
 
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
@@ -75,40 +98,51 @@ app.get(`${apiPrefix}/products`, (req, res) => {
     return res.json(product);
   }
 
-  return res.json(db.products);
+  return res.json(productService.all());
 });
 
-app.post(`${apiPrefix}/products`, async (req, res) => {
-  const product = normalizeProduct(req.body ?? {}, nextProductId());
-  db.products.push(product);
-  await persistDb();
+app.post(`${apiPrefix}/uploads`, authMiddleware, (req, res) => {
+  upload.single('file')(req, res, (error) => {
+    if (error) {
+      return res.status(400).json({ message: error.message });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    const url = `${req.protocol}://${req.get('host')}${apiPrefix}/uploads/${req.file.filename}`;
+    return res.status(201).json({ filename: req.file.filename, url });
+  });
+});
+
+app.post(`${apiPrefix}/products`, authMiddleware, async (req, res) => {
+  const product = productService.create(req.body ?? {});
+  await dbService.save();
   return res.status(201).json(product);
 });
 
-app.put(`${apiPrefix}/products`, async (req, res) => {
+app.put(`${apiPrefix}/products`, authMiddleware, async (req, res) => {
   const id = Number(req.query.id);
-  const index = db.products.findIndex((item) => item.id === id);
+  const updatedProduct = productService.update(id, req.body ?? {});
 
-  if (index < 0) {
+  if (!updatedProduct) {
     return res.status(404).json({ message: 'Product not found' });
   }
 
-  const updatedProduct = normalizeProduct({ ...db.products[index], ...req.body, id }, id);
-  db.products[index] = updatedProduct;
-  await persistDb();
+  await dbService.save();
   return res.json(updatedProduct);
 });
 
-app.delete(`${apiPrefix}/products`, async (req, res) => {
+app.delete(`${apiPrefix}/products`, authMiddleware, async (req, res) => {
   const id = Number(req.query.id);
-  const index = db.products.findIndex((item) => item.id === id);
+  const deletedProduct = productService.delete(id);
 
-  if (index < 0) {
+  if (!deletedProduct) {
     return res.status(404).json({ message: 'Product not found' });
   }
 
-  const [deletedProduct] = db.products.splice(index, 1);
-  await persistDb();
+  await dbService.save();
   return res.json(deletedProduct);
 });
 
@@ -119,38 +153,3 @@ app.use((req, res) => {
 app.listen(port, () => {
   console.log(`E-commerce API running on http://localhost:${port}${apiPrefix}`);
 });
-
-async function loadDb() {
-  if (!existsSync(dataFile)) {
-    return { users: [], products: [] };
-  }
-
-  const raw = await readFile(dataFile, 'utf-8');
-  return JSON.parse(raw);
-}
-
-async function persistDb() {
-  await writeFile(dataFile, `${JSON.stringify(db, null, 2)}\n`, 'utf-8');
-}
-
-function nextProductId() {
-  return db.products.reduce((max, item) => Math.max(max, item.id), 0) + 1;
-}
-
-function normalizeProduct(product, fallbackId) {
-  return {
-    id: Number(product.id ?? fallbackId),
-    title: String(product.title ?? '').trim(),
-    price: Number(product.price ?? 0),
-    description: String(product.description ?? '').trim(),
-    category: String(product.category ?? '').trim(),
-    image: String(product.image ?? 'placeholder.svg').trim(),
-    rating: product.rating
-      ? {
-          rate: Number(product.rating.rate ?? 0),
-          count: Number(product.rating.count ?? 0),
-        }
-      : undefined,
-    quantity: product.quantity ? Number(product.quantity) : undefined,
-  };
-}

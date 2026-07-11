@@ -51,9 +51,9 @@ The API runs on `http://localhost:3000/api`.
 - `GET /api/users/:id` - returns one user.
 - `GET /api/products` - returns all products.
 - `GET /api/products?id=:id` - returns one product.
-- `POST /api/products` - creates a product.
-- `PUT /api/products?id=:id` - updates a product.
-- `DELETE /api/products?id=:id` - deletes a product.
+- `POST /api/products` - creates a product. Requires `Authorization: Bearer <token>`.
+- `PUT /api/products?id=:id` - updates a product. Requires `Authorization: Bearer <token>`.
+- `DELETE /api/products?id=:id` - deletes a product. Requires `Authorization: Bearer <token>`.
 - `GET /api/uploads/:file` - serves product images.
 
 ## Usage
