@@ -7,10 +7,14 @@
 /bazel-out
 
 # Node
-/api/node_modules
 /node_modules
 npm-debug.log
 yarn-error.log
+
+# Api
+/api/node_modules
+/api/data
+/public
 
 # IDEs and editors
 .idea/
