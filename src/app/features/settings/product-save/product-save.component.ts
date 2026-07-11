@@ -34,9 +34,9 @@ export class ProductSaveComponent implements OnInit {
     price: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
     category: new FormControl('', [Validators.required]),
-    image: new FormControl('placeholder.svg'),
+    image: new FormControl('placeholder.png'),
   });
-  imagePreview = 'placeholder.svg';
+  imagePreview = 'placeholder.png';
   selectedImageName = '';
   isUploadingImage = false;
 
@@ -46,7 +46,7 @@ export class ProductSaveComponent implements OnInit {
       this.imagePreview = this.product.image;
       this.selectedImageName = this.extractImageName(this.product.image);
     } else {
-      this.imagePreview = 'placeholder.svg';
+      this.imagePreview = 'placeholder.png';
     }
 
     this.cdr.detectChanges();

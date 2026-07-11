@@ -25,7 +25,7 @@ export class ProductService {
   all() {
     return this.http.get<Product[]>(this.url).pipe(
       map((products) => {
-        products.forEach(this.parseProductImage);
+        products.forEach((product) => this.parseProductImage(product));
         return products;
       })
     );
@@ -96,7 +96,6 @@ export class ProductService {
       product.image = image;
       return;
     }
-
     product.image = `${this.uploadsUrl}/${image}`;
   }
 
@@ -106,7 +105,7 @@ export class ProductService {
   private toStoredImageValue(image: string): string {
     const normalizedImage = String(image ?? '').trim();
     if (!normalizedImage) {
-      return 'placeholder.svg';
+      return 'placeholder.png';
     }
 
     const uploadsPrefix = `${this.uploadsUrl}/`;

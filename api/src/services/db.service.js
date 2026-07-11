@@ -65,7 +65,8 @@ export class DbService {
    * @returns {object} Stored product.
    */
   createProduct(product) {
-    const normalizedProduct = this.normalizeProduct(product, this.nextProductId());
+    const nextId = this.nextProductId();
+    const normalizedProduct = this.normalizeProduct({ ...product, id: nextId }, nextId);
     this.products.push(normalizedProduct);
     return normalizedProduct;
   }
@@ -130,7 +131,8 @@ export class DbService {
    * @returns {number} Next id value.
    */
   nextProductId() {
-    return this.products.reduce((max, item) => Math.max(max, item.id), 0) + 1;
+    const maxId = this.products.reduce((max, item) => Math.max(max, Number(item.id) || 0), 0);
+    return Math.max(1, maxId) + 1;
   }
 
   /**
@@ -146,7 +148,7 @@ export class DbService {
       price: Number(product.price ?? 0),
       description: String(product.description ?? '').trim(),
       category: String(product.category ?? '').trim(),
-      image: String(product.image ?? 'placeholder.svg').trim(),
+      image: String(product.image ?? 'placeholder.png').trim(),
       rating: product.rating
         ? {
             rate: Number(product.rating.rate ?? 0),

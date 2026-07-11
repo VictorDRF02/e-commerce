@@ -37,7 +37,7 @@
       "price": 37,
       "description": "Adjustable aluminum stand for a cleaner workspace and better ergonomics.",
       "category": "electronics",
-      "image": "placeholder.png",
+      "image": "1783779826387-363283436.png",
       "rating": {
         "rate": 4.4,
         "count": 84
@@ -46,7 +46,7 @@
     {
       "id": 3,
       "title": "Cotton T-Shirt",
-      "price": 24.99,
+      "price": 24,
       "description": "Soft everyday t-shirt with a relaxed fit and durable stitching.",
       "category": "clothing",
       "image": "tshirt.svg",
@@ -90,14 +90,6 @@
         "rate": 4.5,
         "count": 47
       }
-    },
-    {
-      "id": 0,
-      "title": "Tal",
-      "price": 5,
-      "description": "dwadwadwa",
-      "category": "Aaaaa",
-      "image": "placeholder.png"
     }
   ]
 }
