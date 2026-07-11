@@ -11,7 +11,7 @@ export class ProductService {
   protected http = inject(HttpClient);
 
   get url() {
-    return `${environment.apiUrl}/products.php`;
+    return `${environment.apiUrl}/products`;
   }
 
   /**

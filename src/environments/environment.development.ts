@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: 'http://lulaexpress.local/api',
+  apiUrl: 'http://localhost:3000/api',
 };

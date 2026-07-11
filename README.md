@@ -28,6 +28,34 @@ npm install
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
+## API
+
+The project includes a local Node.js API compatible with the Angular services in `src/app/core/services`.
+
+### Backend server
+
+Install and run the API from the `api/` folder:
+
+```bash
+cd api
+npm install
+npm run start
+```
+
+The API runs on `http://localhost:3000/api`.
+
+### Available routes
+
+- `POST /api/auth/login` - validates a username and password and returns a token.
+- `GET /api/users` - returns all users.
+- `GET /api/users/:id` - returns one user.
+- `GET /api/products` - returns all products.
+- `GET /api/products?id=:id` - returns one product.
+- `POST /api/products` - creates a product.
+- `PUT /api/products?id=:id` - updates a product.
+- `DELETE /api/products?id=:id` - deletes a product.
+- `GET /api/uploads/:file` - serves product images.
+
 ## Usage
 
 After running the development server, you can access the application at `http://localhost:4200/`.
@@ -52,6 +80,8 @@ An alternative option is:
 
 - Username: `kevinryan`
 - Password: `kev02937@`
+
+The local API ships with the same credentials.
 
 ## Development
 
