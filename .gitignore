@@ -14,7 +14,7 @@ yarn-error.log
 # Api
 /api/node_modules
 /api/data
-/public
+/api/public
 
 # IDEs and editors
 .idea/
