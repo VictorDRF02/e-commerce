@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
 import { Product, Rating } from '../../../core/interfaces/product';
 import { CurrencyPipe } from '@angular/common';
 import { ShortDescriptionPipe } from '../../../shared/pipes/short-description.pipe';

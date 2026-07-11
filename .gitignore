@@ -11,6 +11,11 @@
 npm-debug.log
 yarn-error.log
 
+# Api
+/api/node_modules
+/api/data
+/api/public
+
 # IDEs and editors
 .idea/
 .project

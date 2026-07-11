@@ -1,0 +1,57 @@
+<div
+  class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex"
+>
+  <!-- Product image -->
+  <div class="w-1/4 overflow-hidden">
+    <img
+      [src]="product.image"
+      [alt]="product.title"
+      class="w-full h-full object-contain p-4"
+      loading="lazy"
+    />
+  </div>
+
+  <!-- Product details -->
+  <div class="p-4 flex-1 flex flex-col justify-between">
+    <div>
+      <!-- Title and price -->
+      <div class="flex justify-between items-start mb-2">
+        <h3 class="font-semibold text-lg">
+          {{ product.title }}
+        </h3>
+        <span class="font-bold text-blue-600 text-xl">{{
+          product.price | currency
+        }}</span>
+      </div>
+
+      <!-- Description -->
+      <p class="text-gray-600 mb-4">
+        {{ product.description | shortDescription : 250 : false }}
+      </p>
+    </div>
+
+    <!-- Bottom section with category and buttons -->
+    <div class="flex justify-between items-center">
+      <!-- Categories -->
+      <span class="text-xs px-2 py-1 bg-gray-100 rounded-full text-gray-600">
+        {{ product.category }}
+      </span>
+
+      <!-- Buttons -->
+      <div class="flex gap-2">
+        <button
+          class="px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          (click)="edit.emit()"
+        >
+          Edit
+        </button>
+        <button
+          class="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+          (click)="remove.emit()"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

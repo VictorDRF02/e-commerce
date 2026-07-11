@@ -5,7 +5,9 @@ export interface Product {
   description: string;
   category: string;
   image: string;
+  /** TODO: Add ratings */
   rating?: Rating;
+  // Inner logic
   quantity?: number;
 }
 

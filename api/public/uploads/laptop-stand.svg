@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#374151"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="640" rx="48" fill="url(#bg)"/>
+  <path d="M160 360h320l-60 88H220z" fill="#d1d5db"/>
+  <rect x="190" y="210" width="260" height="140" rx="18" fill="#f9fafb"/>
+  <rect x="220" y="240" width="200" height="80" rx="10" fill="#94a3b8"/>
+  <text x="50%" y="560" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" fill="#f9fafb">Laptop Stand</text>
+</svg>
