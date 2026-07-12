@@ -43,9 +43,15 @@
             <input 
               type="text" 
               formControlName="category" 
+              list="category-suggestions"
               placeholder="Ej. Electrónica"
               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
             />
+            <datalist id="category-suggestions">
+              @for (category of categorySuggestions; track category) {
+              <option [value]="category"></option>
+              }
+            </datalist>
           </div>
 
           <div>

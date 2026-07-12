@@ -39,8 +39,20 @@ export class ProductSaveComponent implements OnInit {
   imagePreview = 'placeholder.png';
   selectedImageName = '';
   isUploadingImage = false;
+  categorySuggestions: string[] = [];
 
   ngOnInit(): void {
+    this.productService.all().subscribe((products) => {
+      this.categorySuggestions = Array.from(
+        new Set(
+          products
+            .map((product) => String(product.category ?? '').trim())
+            .filter((category) => category.length > 0)
+        )
+      ).sort((a, b) => a.localeCompare(b));
+      this.cdr.detectChanges();
+    });
+
     if (this.product) {
       this.form.patchValue(this.product);
       this.imagePreview = this.product.image;
