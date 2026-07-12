@@ -34,9 +34,7 @@ export class LoginComponent extends BaseComponent {
       takeUntil(this.destroy$),
       finalize(() => this.isSubmitting.set(false))
     ).subscribe((res) => {
-      if (res) {
-        this._router.navigate(['/'])
-      }
+      this._router.navigate(['/'])
     });
   }
 

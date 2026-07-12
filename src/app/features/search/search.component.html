@@ -7,9 +7,9 @@
           class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
         >
           <div>
-            <h1 class="text-2xl font-bold text-gray-900">Search</h1>
+            <h1 class="text-2xl font-bold text-gray-900">Buscar</h1>
             <p class="mt-1 text-sm text-gray-500">
-              Find the products you are looking for
+              Encuentra los productos que estás buscando
             </p>
           </div>
           <div class="flex gap-3">
@@ -17,7 +17,7 @@
               (click)="location.back()"
               class="px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
             >
-              Go Back
+              Volver
             </button>
           </div>
         </div>
@@ -32,10 +32,10 @@
           for="search"
           class="block text-sm font-medium text-gray-700 mb-1"
         >
-          Search by name or description @if
+          Busca por nombre o descripción @if
           (searchForm.get('search')?.hasError('minlength') &&
           searchForm.get('search')?.touched) {
-          <span class="text-red-500 text-xs"> (Minimum 3 characters)</span>
+          <span class="text-red-500 text-xs"> (Mínimo 3 caracteres)</span>
           }
         </label>
         <input
@@ -47,7 +47,7 @@
             searchForm.get('search')?.invalid &&
             searchForm.get('search')?.touched
           "
-          placeholder="Type something..."
+          placeholder="Escribe algo..."
         />
       </div>
 
@@ -58,9 +58,9 @@
             for="minPrice"
             class="block text-sm font-medium text-gray-700 mb-1"
           >
-            Min Price @if (searchForm.hasError('minMax') &&
+            Precio mínimo @if (searchForm.hasError('minMax') &&
             searchForm.get('minPrice')?.touched) {
-            <span class="text-red-500 text-xs"> (Must be ≤ max)</span>
+            <span class="text-red-500 text-xs"> (Debe ser ≤ máximo)</span>
             }
           </label>
           <input
@@ -81,9 +81,9 @@
             for="maxPrice"
             class="block text-sm font-medium text-gray-700 mb-1"
           >
-            Max Price @if (searchForm.hasError('minMax') &&
+            Precio máximo @if (searchForm.hasError('minMax') &&
             searchForm.get('maxPrice')?.touched) {
-            <span class="text-red-500 text-xs"> (Must be ≥ min)</span>
+            <span class="text-red-500 text-xs"> (Debe ser ≥ mínimo)</span>
             }
           </label>
           <input
@@ -111,7 +111,7 @@
             [class.cursor-pointer]="!searchForm.invalid"
             [class.cursor-not-allowed]="searchForm.invalid"
           >
-            Apply Filters
+            Aplicar filtros
           </button>
         </div>
       </div>
@@ -124,16 +124,16 @@
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-semibold text-gray-800">
         @if (filteredProducts.length > 0) {
-        {{ filteredProducts.length }} products found } @else if
-        (searchForm.dirty && !isLoading) { No products match your search } @else
-        { Start searching to see results }
+        {{ filteredProducts.length }} productos encontrados } @else if
+        (searchForm.dirty && !isLoading) { No hay productos que coincidan con tu búsqueda } @else
+        { Empieza a buscar para ver resultados }
       </h2>
       @if (hasFiltersApplied()) {
       <button
         (click)="clearFilters()"
         class="text-sm text-blue-600 hover:underline"
       >
-        Clear all filters
+        Limpiar todos los filtros
       </button>
       }
     </div>
@@ -144,7 +144,7 @@
         (click)="clearFilters()"
         class="mt-3 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
       >
-        Clear filters
+        Limpiar filtros
       </button>
     </app-no-products-found>
     }
